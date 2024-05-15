@@ -34,11 +34,11 @@ void showAlert(NSString *tiddies, NSString *meows, bool remeowbutton) {
 void init_loadGeode(void) {
 	NSLog(@"mrow init_loadGeode");
 
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-	NSString *applicationSupportDirectory = [paths firstObject];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *DocumentsDirectory = [paths firstObject];
 
-	NSString *geode_dir = [applicationSupportDirectory stringByAppendingString:@"/GeometryDash/game/geode"];
-	NSString *geode_lib = [geode_dir stringByAppendingString:@"/Geode.ios.dylib"];
+	NSString *geode_dir = [DocumentsDirectory stringByAppendingString:@"/game/geode/"];
+	NSString *geode_lib = [geode_dir stringByAppendingString:@"Geode.ios.dylib"];
 
 	bool is_dir;
 	NSFileManager *fm = [NSFileManager defaultManager];
@@ -49,7 +49,7 @@ void init_loadGeode(void) {
 		}
 	}
 
-	NSLog(@"mrow PATH %@", applicationSupportDirectory);
+	NSLog(@"mrow PATH %@", DocumentsDirectory);
 	NSLog(@"mrow geode dir: %@", geode_dir);
 	NSLog(@"mrow Geode lib path: %@", geode_lib);
 
@@ -66,7 +66,6 @@ void init_loadGeode(void) {
 				showAlert(@"error", @"waaaaaaaa", false);
 				NSLog(@"mrow FAILED to download Geode: %@", error);
 			} else {
-				//NSFileManager *fileManager = [NSFileManager defaultManager];
 				NSError *moveError = nil;
 				if ([fm moveItemAtURL:location toURL:[NSURL fileURLWithPath:geode_lib] error:&moveError]) {
 					NSLog(@"mrow SUCCESS - downloaded Geode!");
